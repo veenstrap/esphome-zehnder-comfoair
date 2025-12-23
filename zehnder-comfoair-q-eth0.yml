@@ -1,7 +1,7 @@
 substitutions:
   friendly_name: Zehnder ComfoAir Q
-  device_name: zehnder-comfoair-q
-  device_description: Zehnder ComfoAir Q Heat Recovery Ventilation Unit
+  device_name: esp32-ca350
+  device_description: Ventilation system
   filter_time: 5s
   filter_send_every: "1"
   filter_window_size: "3"
@@ -20,10 +20,10 @@ packages:
 #  switch: !include packages/switch.yml
 # text_sensors: !include packages/text_sensors.yml
   remote_package:
-    url: https://github.com/SkullboyNL/esphome-zehnder-comfoair
+    url: https://github.com/veenstrap/esphome-zehnder-comfoair
     refresh: 0s
     files: [ 
-      boards/esp32-s2-wifi.yml,
+      boards/esp32-eth0.yml,
       packages/binary_sensors.yml,
       packages/board.yml,
       packages/button.yml,
@@ -38,7 +38,7 @@ packages:
     ]
 
 dashboard_import:
-  package_import_url: github://SkullboyNL/esphome-zehnder-comfoair/zehnder-comfoair-q-wifi-v2.yml@main
+  package_import_url: github://veenstrap/esphome-zehnder-comfoair/zehnder-comfoair-q-wifi-v2.yml@main
   import_full_config: true
 
   
@@ -46,7 +46,7 @@ external_components:
   - components: [ zehnder_comfoair_q ]
     # uncomment for local dev
     # source: components
-    source: github://SkullboyNL/esphome-zehnder-comfoair@main
+    source: github://veenstrap/esphome-zehnder-comfoair@main
     
 esphome:
   name: ${device_name}
@@ -67,14 +67,13 @@ api:
 ota:
   platform: esphome
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  enable_rrm: true
-  enable_btm: true
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO16
 
 captive_portal:
 
