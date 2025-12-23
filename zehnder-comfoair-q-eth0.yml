@@ -75,8 +75,6 @@ ethernet:
   phy_addr: 1
   power_pin: GPIO16
 
-captive_portal:
-
 web_server:
   port: 80
 
